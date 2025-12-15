@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpwl55aiu5uq3"]
+
+[ext_resource type="Script" uid="uid://646fcn6s3fu3" path="res://dialogue_handler.gd" id="1_lkejs"]
+
+[node name="DialogueHandler" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("1_lkejs")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(600, 100)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -100.0
+offset_right = 300.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.6392157)
+
+[node name="Speaker" type="Label" parent="."]
+layout_mode = 0
+offset_left = 315.0
+offset_top = 570.0
+offset_right = 345.0
+offset_bottom = 593.0
+
+[node name="Speech" type="Label" parent="."]
+layout_mode = 0
+offset_left = 410.0
+offset_top = 569.0
+offset_right = 440.0
+offset_bottom = 592.0

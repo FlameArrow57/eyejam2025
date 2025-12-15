@@ -1,12 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://drosw1in4ga21"]
+[gd_scene load_steps=8 format=3 uid="uid://drosw1in4ga21"]
 
+[ext_resource type="Script" uid="uid://cl3ydgrs1tw8k" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://c06gfxl4hu6t1" path="res://art/apartment_4.png" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://bovlvgu2x4hvh" path="res://player.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://bdxbiwlgjfnm" path="res://interactible.tscn" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bpwl55aiu5uq3" path="res://dialogue_handler.tscn" id="5_lquwl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(317, 88)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_1bvp3"]
+radius = 97.77
+
 [node name="main" type="Node2D"]
+script = ExtResource("1_1bvp3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(323.99997, 323.99997)
@@ -14,10 +21,25 @@ scale = Vector2(0.63281244, 0.63281244)
 texture = ExtResource("1_ig7tw")
 
 [node name="Player" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(405, 227)
+scale = Vector2(4.44, 4.44)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Temp static body" type="StaticBody2D" parent="."]
 position = Vector2(148, 433)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Temp static body"]
 position = Vector2(148.5, 34)
 shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="Interactible" parent="." node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
+position = Vector2(609, 433)
+interactArea = NodePath("Area2D")
+
+[node name="Area2D" type="Area2D" parent="Interactible"]
+position = Vector2(-609, -433)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactible/Area2D"]
+position = Vector2(606, 357)
+shape = SubResource("CircleShape2D_1bvp3")
+
+[node name="DialogueCreator" parent="." instance=ExtResource("5_lquwl")]
