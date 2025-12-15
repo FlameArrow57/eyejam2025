@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdxbiwlgjfnm"]
+
+[ext_resource type="Script" uid="uid://c43caw3p5fx0q" path="res://scripts/interactible.gd" id="1_mblcr"]
+
+[node name="Interactible" type="Node2D"]
+script = ExtResource("1_mblcr")
+
+[node name="Prompt" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.5
+offset_top = -20.0
+offset_right = 42.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5568628)
+
+[node name="Label" type="Label" parent="Prompt"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.5
+offset_top = -11.5
+offset_right = 39.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Interact"
