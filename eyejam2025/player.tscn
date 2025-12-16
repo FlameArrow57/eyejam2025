@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bovlvgu2x4hvh"]
+[gd_scene load_steps=5 format=3 uid="uid://bovlvgu2x4hvh"]
 
 [ext_resource type="Texture2D" uid="uid://kkepab5yisec" path="res://art/character_sprite.png" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://db8olk828tpjm" path="res://player.gd" id="1_onrkg"]
+[ext_resource type="AudioStream" uid="uid://bdbtsf02uon4e" path="res://sound/carpet_footstep.ogg" id="3_i3pqv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(24, 5)
@@ -18,3 +19,6 @@ centered = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(12, 29)
 shape = SubResource("RectangleShape2D_onrkg")
+
+[node name="MoveSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_i3pqv")

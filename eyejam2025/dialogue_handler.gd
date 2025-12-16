@@ -14,6 +14,7 @@ func createDialogue(speaker: String, speech: String):
 	
 	for letter in speech:
 		$Speech.text += letter
+		$TypingSound.play()
 		await get_tree().create_timer(0.1).timeout
 	
 	await get_tree().create_timer(2).timeout

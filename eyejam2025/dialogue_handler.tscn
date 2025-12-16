@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bpwl55aiu5uq3"]
+[gd_scene load_steps=3 format=3 uid="uid://bpwl55aiu5uq3"]
 
 [ext_resource type="Script" uid="uid://646fcn6s3fu3" path="res://dialogue_handler.gd" id="1_lkejs"]
+[ext_resource type="AudioStream" uid="uid://cnenujdegxeti" path="res://sound/text_typing_sound.ogg" id="2_vfr1w"]
 
 [node name="DialogueHandler" type="Control"]
 layout_mode = 3
@@ -37,3 +38,6 @@ offset_left = 410.0
 offset_top = 569.0
 offset_right = 440.0
 offset_bottom = 592.0
+
+[node name="TypingSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_vfr1w")
