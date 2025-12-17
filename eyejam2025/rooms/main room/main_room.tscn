@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cvo0fpagmbehs"]
-
-[ext_resource type="Texture2D" uid="uid://f0ph8y5v85sn" path="res://art/main room/main room.png" id="1_iopgq"]
-
-[node name="Main Room" type="Node2D"]
-
-[node name="MainRoom" type="Sprite2D" parent="."]
-position = Vector2(128, 128)
-texture = ExtResource("1_iopgq")
