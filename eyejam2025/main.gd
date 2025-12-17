@@ -27,4 +27,4 @@ func handleInteractible(intName: String):
 		"TV":
 			pass
 		_:
-			$DialogueCreator.createDialogue("Test", "This is an ancient box")
+			$DialogueCreator.startOrAdvDialogue("Test", "This is an ancient box")

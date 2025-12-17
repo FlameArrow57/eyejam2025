@@ -10,5 +10,4 @@ signal InteractibleTriggered(intName: String)
 signal TeleTriggered(teleToName: String, teleFromName: String)
 
 # dialogue signals
-var isDialogueActive = false
 signal StartDialogue(triggerSource: String)

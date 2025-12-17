@@ -43,7 +43,7 @@ interactArea = NodePath("Area2D")
 [node name="Area2D" type="Area2D" parent="MainRoom/Interactible"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainRoom/Interactible/Area2D"]
-position = Vector2(347, 129)
+position = Vector2(-9, -142)
 shape = SubResource("CircleShape2D_7mycd")
 
 [node name="Kitchen" type="Sprite2D" parent="."]
@@ -59,3 +59,4 @@ scale = Vector2(4.44, 4.44)
 
 [node name="DialogueCreator" parent="." instance=ExtResource("5_lquwl")]
 visible = false
+z_index = 1
