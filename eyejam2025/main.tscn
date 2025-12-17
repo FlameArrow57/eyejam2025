@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://drosw1in4ga21"]
+[gd_scene load_steps=10 format=3 uid="uid://drosw1in4ga21"]
 
 [ext_resource type="Script" uid="uid://cl3ydgrs1tw8k" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bovlvgu2x4hvh" path="res://player.tscn" id="2_0xm2m"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c4bwasl73wajh" path="res://art/main room/main_room.png" id="4_7mycd"]
 [ext_resource type="PackedScene" uid="uid://bpwl55aiu5uq3" path="res://dialogue_handler.tscn" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://br4rlkf2677o7" path="res://art/main room/couch.png" id="6_7mycd"]
+[ext_resource type="Texture2D" uid="uid://d0xrl44mmmoma" path="res://art/kitchen/kitchen.png" id="7_272bh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(501.5, 132)
@@ -18,35 +19,43 @@ y_sort_enabled = true
 script = ExtResource("1_1bvp3")
 
 [node name="MainRoom" type="Sprite2D" parent="."]
+y_sort_enabled = true
 texture = ExtResource("4_7mycd")
 centered = false
 
-[node name="Couch" type="Sprite2D" parent="."]
+[node name="Couch" type="Sprite2D" parent="MainRoom"]
 position = Vector2(216, 803)
 texture = ExtResource("6_7mycd")
 centered = false
 offset = Vector2(0, -235)
 
-[node name="Temp static body" type="StaticBody2D" parent="."]
-position = Vector2(148, 433)
+[node name="StaticBody2D" type="StaticBody2D" parent="MainRoom/Couch"]
+position = Vector2(-68, -370)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Temp static body"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainRoom/Couch/StaticBody2D"]
 position = Vector2(321.25, 305)
 shape = SubResource("RectangleShape2D_0xm2m")
 
-[node name="DialogueCreator" parent="." instance=ExtResource("5_lquwl")]
-visible = false
-
-[node name="Interactible" parent="." node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
-position = Vector2(605, 437)
+[node name="Interactible" parent="MainRoom" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
+position = Vector2(972, 694)
 interactArea = NodePath("Area2D")
 
-[node name="Area2D" type="Area2D" parent="Interactible"]
+[node name="Area2D" type="Area2D" parent="MainRoom/Interactible"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactible/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainRoom/Interactible/Area2D"]
 position = Vector2(347, 129)
 shape = SubResource("CircleShape2D_7mycd")
 
+[node name="Kitchen" type="Sprite2D" parent="."]
+position = Vector2(2614, 0)
+texture = ExtResource("7_272bh")
+centered = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="Player" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(405, 227)
+position = Vector2(833, 840)
 scale = Vector2(4.44, 4.44)
+
+[node name="DialogueCreator" parent="." instance=ExtResource("5_lquwl")]
+visible = false
