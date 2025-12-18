@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c43caw3p5fx0q" path="res://interactible.gd" id="1_mblcr"]
 
 [node name="Interactible" type="Node2D"]
+z_index = 1
 script = ExtResource("1_mblcr")
 
 [node name="Prompt" type="ColorRect" parent="."]
@@ -20,6 +21,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.5568628)
 
 [node name="Label" type="Label" parent="Prompt"]
+texture_filter = 2
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

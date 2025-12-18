@@ -19,18 +19,18 @@ func createDialogue(speaker: String, speech: String):
 	self.visible = true
 	Signals.RemovePlayerMovement.emit()
 	
-	$Speaker.text = speaker
-	$Speech.text = ""
+	$ColorRect/Speaker.text = speaker
+	$ColorRect/Speech.text = ""
 	
 	var i = 0
-	while not self.advanceDialogue and $Speech.text != speech:
-		$Speech.text += speech[i]
+	while not self.advanceDialogue and $ColorRect/Speech.text != speech:
+		$ColorRect/Speech.text += speech[i]
 		$TypingSound.play()
 		await get_tree().create_timer(0.1).timeout
 		i += 1
 	
 	if self.advanceDialogue:
-		$Speech.text = speech
+		$ColorRect/Speech.text = speech
 		
 	self.advanceDialogue = true
 	

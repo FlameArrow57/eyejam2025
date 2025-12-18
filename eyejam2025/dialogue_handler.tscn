@@ -4,6 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://cnenujdegxeti" path="res://sound/text_typing_sound.ogg" id="2_vfr1w"]
 
 [node name="DialogueHandler" type="Control"]
+z_index = 2
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_lkejs")
@@ -24,6 +25,7 @@ grow_vertical = 0
 color = Color(0, 0, 0, 0.6392157)
 
 [node name="Speaker" type="Label" parent="ColorRect"]
+texture_filter = 2
 layout_mode = 0
 offset_left = 39.0
 offset_top = 22.0
@@ -31,6 +33,7 @@ offset_right = 69.0
 offset_bottom = 45.0
 
 [node name="Speech" type="Label" parent="ColorRect"]
+texture_filter = 2
 layout_mode = 0
 offset_left = 134.0
 offset_top = 21.0

@@ -122,8 +122,10 @@ texture = ExtResource("8_vivmo")
 centered = false
 offset = Vector2(0, -60)
 
-[node name="Interactible" parent="MainRoom/Box" instance=ExtResource("3_h2yge")]
+[node name="Interactible" parent="MainRoom/Box" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
 position = Vector2(33, 33)
+interactArea = NodePath("Area2D")
+interactibleName = "Ancient Box"
 
 [node name="Area2D" type="Area2D" parent="MainRoom/Box/Interactible"]
 position = Vector2(5, -50)
@@ -322,14 +324,14 @@ position = Vector2(-16.5, 0.5)
 shape = SubResource("RectangleShape2D_w48qg")
 debug_color = Color(0.64431715, 0.5231368, 0, 0.41960785)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
 [node name="Player" parent="." instance=ExtResource("2_0xm2m")]
 position = Vector2(5469, 449.00006)
 scale = Vector2(4.44, 4.44)
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="PlayerStart" type="Marker2D" parent="."]
-position = Vector2(5265, 398)
+position = Vector2(5350, 403)
 
 [node name="TeleBedroomToMainroom" type="Marker2D" parent="."]
 position = Vector2(284, 483)
@@ -344,5 +346,3 @@ position = Vector2(5493, 590)
 position = Vector2(3044, 348)
 
 [node name="DialogueCreator" parent="." instance=ExtResource("5_lquwl")]
-visible = false
-z_index = 1
