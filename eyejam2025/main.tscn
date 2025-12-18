@@ -1,20 +1,53 @@
-[gd_scene load_steps=14 format=3 uid="uid://drosw1in4ga21"]
+[gd_scene load_steps=27 format=3 uid="uid://drosw1in4ga21"]
 
 [ext_resource type="Script" uid="uid://cl3ydgrs1tw8k" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bovlvgu2x4hvh" path="res://player.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://bdxbiwlgjfnm" path="res://interactible.tscn" id="3_h2yge"]
 [ext_resource type="Texture2D" uid="uid://bm5c2atjvtjiv" path="res://art/main room/mirror.png" id="4_4c57u"]
 [ext_resource type="Texture2D" uid="uid://c4bwasl73wajh" path="res://art/main room/main_room.png" id="4_7mycd"]
 [ext_resource type="Texture2D" uid="uid://ciqgihxgabgjn" path="res://art/main room/main_room_wall.png" id="5_efxa6"]
 [ext_resource type="PackedScene" uid="uid://bpwl55aiu5uq3" path="res://dialogue_handler.tscn" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://br4rlkf2677o7" path="res://art/main room/couch.png" id="6_7mycd"]
 [ext_resource type="Texture2D" uid="uid://7mlkbypv16lr" path="res://art/bedroom/bedroom.png" id="6_kek77"]
+[ext_resource type="Texture2D" uid="uid://bbtt4pryi2inf" path="res://art/monster.png" id="6_w48qg"]
 [ext_resource type="Texture2D" uid="uid://dnvyabshbpu14" path="res://art/bedroom/cat.png" id="7_4c57u"]
 [ext_resource type="Texture2D" uid="uid://c0gvw6swkdym" path="res://art/kitchen/kitchen.png" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://baj0oixsthbdl" path="res://tele_area.tscn" id="8_4c57u"]
 [ext_resource type="Texture2D" uid="uid://c2hvw1g5bh4bm" path="res://art/kitchen/kitchen_piece.png" id="8_dg77c"]
+[ext_resource type="Texture2D" uid="uid://f2vgg2jeppnp" path="res://art/main room/box.png" id="8_vivmo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(501.5, 132)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2cqfq"]
+radius = 124.32619
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cegan"]
+radius = 100.17984
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_074og"]
+radius = 139.91783
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yaehf"]
+size = Vector2(527, 194)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vivmo"]
+radius = 117.01709
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2cqfq"]
+size = Vector2(62.5, 160.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yaehf"]
+radius = 101.12369
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vivmo"]
+size = Vector2(75.5, 164)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w48qg"]
+radius = 106.07545
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w48qg"]
+size = Vector2(67, 223)
 
 [node name="main" type="Node2D"]
 y_sort_enabled = true
@@ -22,10 +55,10 @@ script = ExtResource("1_1bvp3")
 
 [node name="Background" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(10000, 5000)
-offset_left = -1324.0
-offset_top = -816.0
-offset_right = 8676.0
-offset_bottom = 4184.0
+offset_left = -1364.0
+offset_top = -821.0
+offset_right = 8636.0
+offset_bottom = 4179.0
 color = Color(0, 0, 0, 1)
 
 [node name="MainRoom" type="Sprite2D" parent="."]
@@ -65,12 +98,49 @@ texture = ExtResource("5_efxa6")
 centered = false
 offset = Vector2(0, -576)
 
+[node name="EyeMonster" type="Sprite2D" parent="MainRoom"]
+position = Vector2(461, 449)
+texture = ExtResource("6_w48qg")
+centered = false
+offset = Vector2(0, -150)
+
+[node name="Interactible" parent="MainRoom/EyeMonster" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
+position = Vector2(51, -24)
+interactArea = NodePath("Area2D")
+interactibleName = "Eye Monster"
+
+[node name="Area2D" type="Area2D" parent="MainRoom/EyeMonster/Interactible"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainRoom/EyeMonster/Interactible/Area2D"]
+shape = SubResource("CircleShape2D_2cqfq")
+debug_color = Color(0.65801173, 0.5161255, 1.92523e-07, 0.41960785)
+metadata/_edit_lock_ = true
+
+[node name="Box" type="Sprite2D" parent="MainRoom"]
+position = Vector2(875, 850)
+texture = ExtResource("8_vivmo")
+centered = false
+offset = Vector2(0, -60)
+
+[node name="Interactible" parent="MainRoom/Box" instance=ExtResource("3_h2yge")]
+position = Vector2(33, 33)
+
+[node name="Area2D" type="Area2D" parent="MainRoom/Box/Interactible"]
+position = Vector2(5, -50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainRoom/Box/Interactible/Area2D"]
+position = Vector2(2, 0)
+shape = SubResource("CircleShape2D_cegan")
+debug_color = Color(0.65107334, 0.51971495, 0, 0.41960785)
+metadata/_edit_lock_ = true
+
 [node name="StaticBody2D" type="StaticBody2D" parent="MainRoom"]
 position = Vector2(130, 520)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainRoom/StaticBody2D"]
 build_mode = 1
 polygon = PackedVector2Array(0, 0, 62, 0, 62, 44, 58, 52, 54, 56, 46, 60, -118, 60, -118, 492, 126, 492, 126, 360, 522, 360, 522, 491, 886, 492, 886, -216, 574, -216, 574, -156, 126, -156, 126, -216, -3, -216)
+metadata/_edit_lock_ = true
 
 [node name="TeleArea" parent="MainRoom" node_paths=PackedStringArray("teleToMarker", "cameraFocusPoint") instance=ExtResource("8_4c57u")]
 position = Vector2(-27, 799)
@@ -84,6 +154,30 @@ scale = Vector2(1, 2.185)
 teleToMarker = NodePath("../../TeleToBedroom")
 cameraFocusPoint = NodePath("../../Bedroom")
 
+[node name="Interactible" parent="MainRoom" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
+position = Vector2(968, 558)
+interactArea = NodePath("Area2D")
+interactibleName = "Front Door"
+
+[node name="Area2D" type="Area2D" parent="MainRoom/Interactible"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainRoom/Interactible/Area2D"]
+position = Vector2(24, -1)
+shape = SubResource("CircleShape2D_074og")
+debug_color = Color(0.6408458, 0.5248674, 0, 0.41960785)
+
+[node name="Interactible2" parent="MainRoom" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
+position = Vector2(457, 991)
+interactArea = NodePath("Area2D")
+interactibleName = "TV"
+
+[node name="Area2D" type="Area2D" parent="MainRoom/Interactible2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainRoom/Interactible2/Area2D"]
+position = Vector2(2, -61)
+shape = SubResource("RectangleShape2D_yaehf")
+debug_color = Color(0.652956, 0.51874864, 0, 0.41960785)
+
 [node name="Kitchen" type="Sprite2D" parent="."]
 y_sort_enabled = true
 position = Vector2(2919, 0)
@@ -95,6 +189,24 @@ position = Vector2(172, 792)
 texture = ExtResource("8_dg77c")
 centered = false
 offset = Vector2(0, -204)
+
+[node name="TeethMonster" type="Sprite2D" parent="Kitchen"]
+position = Vector2(161, 518)
+texture = ExtResource("6_w48qg")
+centered = false
+offset = Vector2(0, -150)
+
+[node name="Interactible" parent="Kitchen/TeethMonster" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
+position = Vector2(48, -19)
+interactArea = NodePath("Area2D")
+interactibleName = "Teeth Monster"
+
+[node name="Area2D" type="Area2D" parent="Kitchen/TeethMonster/Interactible"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Kitchen/TeethMonster/Interactible/Area2D"]
+position = Vector2(1, -44)
+shape = SubResource("CircleShape2D_vivmo")
+debug_color = Color(0.6493896, 0.52057445, 1.92523e-07, 0.41960785)
 
 [node name="TeleArea" parent="Kitchen" node_paths=PackedStringArray("teleToMarker", "cameraFocusPoint") instance=ExtResource("8_4c57u")]
 position = Vector2(122, 269)
@@ -108,6 +220,31 @@ position = Vector2(8, 268)
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Kitchen/StaticBody2D"]
 build_mode = 1
 polygon = PackedVector2Array(496, 366, 164, 366, 164, 524, 428, 524, 428, 672, 164, 672, 148, 664, 115, 656, 64, 656, 48, 660, 32, 664, 28, 668, 23, 672, 0, 672, 0, 0, 232, 0, 232, 84, 496, 84)
+metadata/_edit_lock_ = true
+
+[node name="Interactible" parent="Kitchen" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
+position = Vector2(525, 814)
+interactArea = NodePath("Area2D")
+interactibleName = "Fridge"
+
+[node name="Area2D" type="Area2D" parent="Kitchen/Interactible"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Kitchen/Interactible/Area2D"]
+position = Vector2(-106.25, 52.75)
+shape = SubResource("RectangleShape2D_2cqfq")
+debug_color = Color(0.6420016, 0.5242931, 0, 0.41960785)
+
+[node name="Interactible2" parent="Kitchen" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
+position = Vector2(560, 499)
+interactArea = NodePath("Area2D")
+interactibleName = "Knife"
+
+[node name="Area2D" type="Area2D" parent="Kitchen/Interactible2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Kitchen/Interactible2/Area2D"]
+position = Vector2(-44, -17)
+shape = SubResource("CircleShape2D_yaehf")
+debug_color = Color(0.6528019, 0.5188279, 0, 0.41960785)
 
 [node name="Bedroom" type="Sprite2D" parent="."]
 y_sort_enabled = true
@@ -120,6 +257,37 @@ flip_h = true
 position = Vector2(111, 622)
 texture = ExtResource("7_4c57u")
 flip_h = true
+
+[node name="Interactible" parent="Bedroom/Cat" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
+position = Vector2(33, 37)
+interactArea = NodePath("Area2D")
+interactibleName = "Cat"
+
+[node name="Area2D" type="Area2D" parent="Bedroom/Cat/Interactible"]
+position = Vector2(70, -32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bedroom/Cat/Interactible/Area2D"]
+position = Vector2(-6.75, -5)
+shape = SubResource("RectangleShape2D_vivmo")
+debug_color = Color(0.65593946, 0.51720583, 0, 0.41960785)
+
+[node name="PlantMonster" type="Sprite2D" parent="Bedroom"]
+position = Vector2(433, 643)
+texture = ExtResource("6_w48qg")
+centered = false
+offset = Vector2(0, -150)
+
+[node name="Interactible" parent="Bedroom/PlantMonster" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
+position = Vector2(47, -13)
+interactArea = NodePath("Area2D")
+interactibleName = "Plant Monster"
+
+[node name="Area2D" type="Area2D" parent="Bedroom/PlantMonster/Interactible"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bedroom/PlantMonster/Interactible/Area2D"]
+position = Vector2(1, -52)
+shape = SubResource("CircleShape2D_w48qg")
+debug_color = Color(0.6688905, 0.5103387, 0, 0.41960785)
 
 [node name="TeleArea" parent="Bedroom" node_paths=PackedStringArray("teleToMarker", "cameraFocusPoint") instance=ExtResource("8_4c57u")]
 position = Vector2(684, 465)
@@ -139,6 +307,20 @@ cameraFocusPoint = NodePath("../../MainRoom")
 position = Vector2(556, 296)
 build_mode = 1
 polygon = PackedVector2Array(0, 0, -200, 0, -216, -4, -384, -4, -384, 160, -384, 244, -376, 248, -364, 260, -360, 268, -360, 406, 80, 404, 81, -56, 0, -56)
+metadata/_edit_lock_ = true
+
+[node name="Interactible2" parent="Bedroom" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
+position = Vector2(92, 398)
+interactArea = NodePath("Area2D")
+interactibleName = "Bed"
+
+[node name="Area2D" type="Area2D" parent="Bedroom/Interactible2"]
+position = Vector2(115, 6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bedroom/Interactible2/Area2D"]
+position = Vector2(-16.5, 0.5)
+shape = SubResource("RectangleShape2D_w48qg")
+debug_color = Color(0.64431715, 0.5231368, 0, 0.41960785)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
