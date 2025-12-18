@@ -1,24 +1,32 @@
-[gd_scene load_steps=12 format=3 uid="uid://drosw1in4ga21"]
+[gd_scene load_steps=14 format=3 uid="uid://drosw1in4ga21"]
 
 [ext_resource type="Script" uid="uid://cl3ydgrs1tw8k" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bovlvgu2x4hvh" path="res://player.tscn" id="2_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://bdxbiwlgjfnm" path="res://interactible.tscn" id="3_h2yge"]
+[ext_resource type="Texture2D" uid="uid://bm5c2atjvtjiv" path="res://art/main room/mirror.png" id="4_4c57u"]
 [ext_resource type="Texture2D" uid="uid://c4bwasl73wajh" path="res://art/main room/main_room.png" id="4_7mycd"]
+[ext_resource type="Texture2D" uid="uid://ciqgihxgabgjn" path="res://art/main room/main_room_wall.png" id="5_efxa6"]
 [ext_resource type="PackedScene" uid="uid://bpwl55aiu5uq3" path="res://dialogue_handler.tscn" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://br4rlkf2677o7" path="res://art/main room/couch.png" id="6_7mycd"]
 [ext_resource type="Texture2D" uid="uid://7mlkbypv16lr" path="res://art/bedroom/bedroom.png" id="6_kek77"]
 [ext_resource type="Texture2D" uid="uid://dnvyabshbpu14" path="res://art/bedroom/cat.png" id="7_4c57u"]
 [ext_resource type="Texture2D" uid="uid://c0gvw6swkdym" path="res://art/kitchen/kitchen.png" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://baj0oixsthbdl" path="res://tele_area.tscn" id="8_4c57u"]
+[ext_resource type="Texture2D" uid="uid://c2hvw1g5bh4bm" path="res://art/kitchen/kitchen_piece.png" id="8_dg77c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(501.5, 132)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7mycd"]
-radius = 107.563934
-
 [node name="main" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_1bvp3")
+
+[node name="Background" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(10000, 5000)
+offset_left = -1324.0
+offset_top = -816.0
+offset_right = 8676.0
+offset_bottom = 4184.0
+color = Color(0, 0, 0, 1)
 
 [node name="MainRoom" type="Sprite2D" parent="."]
 y_sort_enabled = true
@@ -38,38 +46,120 @@ position = Vector2(-68, -370)
 position = Vector2(321.25, 305)
 shape = SubResource("RectangleShape2D_0xm2m")
 
-[node name="Interactible" parent="MainRoom" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
-position = Vector2(972, 694)
-interactArea = NodePath("Area2D")
+[node name="Mirror" type="Sprite2D" parent="MainRoom"]
+position = Vector2(772, 384)
+texture = ExtResource("4_4c57u")
+centered = false
+offset = Vector2(0, -312)
 
-[node name="Area2D" type="Area2D" parent="MainRoom/Interactible"]
+[node name="StaticBody2D" type="StaticBody2D" parent="MainRoom/Mirror"]
+position = Vector2(75, -166)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainRoom/Interactible/Area2D"]
-position = Vector2(-9, -142)
-shape = SubResource("CircleShape2D_7mycd")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainRoom/Mirror/StaticBody2D"]
+position = Vector2(-75, 130)
+polygon = PackedVector2Array(0, 0, 4, 12, 8, 20, 12, 24, 20, 28, 32, 36, 112, 36, 124, 28, 132, 20, 140, 4, 140, -7, 0, -7)
+
+[node name="MainRoomWall" type="Sprite2D" parent="MainRoom"]
+position = Vector2(4, 580)
+texture = ExtResource("5_efxa6")
+centered = false
+offset = Vector2(0, -576)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="MainRoom"]
+position = Vector2(130, 520)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MainRoom/StaticBody2D"]
+build_mode = 1
+polygon = PackedVector2Array(0, 0, 62, 0, 62, 44, 58, 52, 54, 56, 46, 60, -118, 60, -118, 492, 126, 492, 126, 360, 522, 360, 522, 491, 886, 492, 886, -216, 574, -216, 574, -156, 126, -156, 126, -216, -3, -216)
+
+[node name="TeleArea" parent="MainRoom" node_paths=PackedStringArray("teleToMarker", "cameraFocusPoint") instance=ExtResource("8_4c57u")]
+position = Vector2(-27, 799)
+scale = Vector2(1, 4.45)
+teleToMarker = NodePath("../../TeleMainroomToKitchen")
+cameraFocusPoint = NodePath("../../Kitchen")
+
+[node name="TeleArea2" parent="MainRoom" node_paths=PackedStringArray("teleToMarker", "cameraFocusPoint") instance=ExtResource("8_4c57u")]
+position = Vector2(106, 411)
+scale = Vector2(1, 2.185)
+teleToMarker = NodePath("../../TeleToBedroom")
+cameraFocusPoint = NodePath("../../Bedroom")
 
 [node name="Kitchen" type="Sprite2D" parent="."]
+y_sort_enabled = true
 position = Vector2(2919, 0)
 texture = ExtResource("7_272bh")
 centered = false
 
+[node name="KitchenPiece" type="Sprite2D" parent="Kitchen"]
+position = Vector2(172, 792)
+texture = ExtResource("8_dg77c")
+centered = false
+offset = Vector2(0, -204)
+
+[node name="TeleArea" parent="Kitchen" node_paths=PackedStringArray("teleToMarker", "cameraFocusPoint") instance=ExtResource("8_4c57u")]
+position = Vector2(122, 269)
+scale = Vector2(1.32, 0.375)
+teleToMarker = NodePath("../../TeleKitchenToMainroom")
+cameraFocusPoint = NodePath("../../MainRoom")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Kitchen"]
+position = Vector2(8, 268)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Kitchen/StaticBody2D"]
+build_mode = 1
+polygon = PackedVector2Array(496, 366, 164, 366, 164, 524, 428, 524, 428, 672, 164, 672, 148, 664, 115, 656, 64, 656, 48, 660, 32, 664, 28, 668, 23, 672, 0, 672, 0, 0, 232, 0, 232, 84, 496, 84)
+
 [node name="Bedroom" type="Sprite2D" parent="."]
-position = Vector2(5000, 0)
+y_sort_enabled = true
+position = Vector2(5002, -4)
 texture = ExtResource("6_kek77")
 centered = false
+flip_h = true
 
 [node name="Cat" type="Sprite2D" parent="Bedroom"]
-position = Vector2(527, 624)
+position = Vector2(111, 622)
 texture = ExtResource("7_4c57u")
+flip_h = true
+
+[node name="TeleArea" parent="Bedroom" node_paths=PackedStringArray("teleToMarker", "cameraFocusPoint") instance=ExtResource("8_4c57u")]
+position = Vector2(684, 465)
+scale = Vector2(1, 5.1)
+teleToMarker = NodePath("../../TeleBedroomToMainroom")
+cameraFocusPoint = NodePath("../../MainRoom")
+
+[node name="TeleArea2" parent="Bedroom" node_paths=PackedStringArray("teleToMarker", "cameraFocusPoint") instance=ExtResource("8_4c57u")]
+position = Vector2(312, 748)
+scale = Vector2(6.735, 1)
+teleToMarker = NodePath("../../TeleBedroomToMainroom")
+cameraFocusPoint = NodePath("../../MainRoom")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Bedroom"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bedroom/StaticBody2D"]
+position = Vector2(556, 296)
+build_mode = 1
+polygon = PackedVector2Array(0, 0, -200, 0, -216, -4, -384, -4, -384, 160, -384, 244, -376, 248, -364, 260, -360, 268, -360, 406, 80, 404, 81, -56, 0, -56)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(833, 840)
+position = Vector2(5469, 449.00006)
 scale = Vector2(4.44, 4.44)
 
 [node name="PlayerStart" type="Marker2D" parent="."]
-position = Vector2(5333, 408)
+position = Vector2(5265, 398)
+
+[node name="TeleBedroomToMainroom" type="Marker2D" parent="."]
+position = Vector2(284, 483)
+
+[node name="TeleKitchenToMainroom" type="Marker2D" parent="."]
+position = Vector2(146, 880)
+
+[node name="TeleToBedroom" type="Marker2D" parent="."]
+position = Vector2(5493, 590)
+
+[node name="TeleMainroomToKitchen" type="Marker2D" parent="."]
+position = Vector2(3044, 348)
 
 [node name="DialogueCreator" parent="." instance=ExtResource("5_lquwl")]
 visible = false

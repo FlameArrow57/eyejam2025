@@ -7,7 +7,7 @@ signal AllowPlayerMovement
 
 # area based triggers
 signal InteractibleTriggered(intName: String)
-signal TeleTriggered(teleToName: String, teleFromName: String)
+signal TeleTriggered(teleToPoint: Marker2D, cameraFocusPoint: Sprite2D)
 
 # dialogue signals
 signal StartDialogue(triggerSource: String)

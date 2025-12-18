@@ -11,14 +11,13 @@ func _ready() -> void:
 	Signals.InteractibleTriggered.connect(handleInteractible)
 	Signals.TeleTriggered.connect(teleToRoom)
 	
-	self.teleToRoom("Bedroom", "")
+	$Player.position = $PlayerStart.position
 	
-func teleToRoom(newRoomName: String, oldRoomName: String):
-	var roomNode: Sprite2D = get_node(newRoomName)
-	$Camera2D.position = roomNode.position + roomNode.get_rect().size / 2
+	self.teleToRoom($PlayerStart, $Bedroom)
 	
-	if oldRoomName.length():
-		pass
+func teleToRoom(playerMoveSpot: Marker2D, cameraFocusPoint: Sprite2D):
+	$Player.position = playerMoveSpot.position
+	$Camera2D.position = cameraFocusPoint.position + cameraFocusPoint.get_rect().size / 2
 
 func handleInteractible(intName: String):
 	match intName:
