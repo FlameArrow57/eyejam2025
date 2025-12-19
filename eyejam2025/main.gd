@@ -1,5 +1,13 @@
 extends Node2D
 
+# project notes
+# project uses "nearest" default canvas texture filter, all in game text labels override it to "linear"
+# all tangible sprites are oriented with y sort enabled
+# z index 0 - base
+# z index 1 - interactible text boxes
+# z index 2 - dialogue box
+# z index 3 - full screen effects
+
 # game state
 enum {STATE_START, STATE_MONSTER_PLANT, STATE_MONSTER_EYE, STATE_MONSTER_TEETH, STATE_MONSTER_FINAL}
 var gameState = STATE_START
