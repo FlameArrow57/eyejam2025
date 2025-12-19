@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kkepab5yisec"
-path="res://.godot/imported/character_sprite.png-5d4f8941a38b2845f9a235989e9bd154.ctex"
+uid="uid://htwdj6voryqa"
+path="res://.godot/imported/finish_point.PNG-747593426ff5e02e9875d3a91836c845.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/character_sprite.png"
-dest_files=["res://.godot/imported/character_sprite.png-5d4f8941a38b2845f9a235989e9bd154.ctex"]
+source_file="res://art/finish_point.PNG"
+dest_files=["res://.godot/imported/finish_point.PNG-747593426ff5e02e9875d3a91836c845.ctex"]
 
 [params]
 
