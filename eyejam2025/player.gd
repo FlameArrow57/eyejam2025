@@ -27,7 +27,10 @@ func _physics_process(_delta: float) -> void:
 			$MoveSound.play()
 			footstepsAvailable = false
 		move_and_slide()
-	
+	else:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		
 	self.update_animation()
 
 func update_animation() -> void:
