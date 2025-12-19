@@ -190,6 +190,7 @@ func handleInteractible(intName: String):
 					$DialogueCreator.startOrAdvDialogue("", "Using the knife wouldn't help any more at the moment.")	
 				else:
 					$DialogueCreator.startOrAdvDialogue("", "You cut your right eye out. There's no pain.")
+					$Player.eyeMissing = true
 					self.createOverlayColorFade(Color(1, 0, 0, 0.15), 0.75, 0.75)
 					self.playSoundEffect(self.eyeCutOutSound)
 					self.eyeCollected = true
@@ -220,14 +221,15 @@ func handleInteractible(intName: String):
 				$Kitchen/CombinedMonster.modulate.a = 0
 				tween.tween_property($Kitchen/CombinedMonster, "modulate:a", 1, 1)
 				await tween.finished
+				
 				$DialogueCreator.startOrAdvDialogue("", "A larger horror appears, a combination of the earlier three. Yet I had no choice.")
 				await Signals.DialogueFinished
 				$DialogueCreator.startOrAdvDialogue("", "You perish from exhaustion.")
 				await Signals.DialogueFinished
+				
 				self.createOverlayColorFade(Color(0, 0, 0, 1), 3, 1)
 				await get_tree().create_timer(3).timeout
-				self.teleToRoom($PlayerStart, $FinishPoint)
-				
+				$Camera2D.position = $FinishPoint.position
 		"Balcony":
 			if self.gameState == STATE_START:
 				$DialogueCreator.startOrAdvDialogue("", "I have no interest in going onto the balcony right now.")
