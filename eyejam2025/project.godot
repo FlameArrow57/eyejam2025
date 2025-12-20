@@ -13,7 +13,6 @@ config_version=5
 config/name="Eye Jam 2025"
 run/main_scene="uid://drosw1in4ga21"
 config/features=PackedStringArray("4.5", "GL Compatibility")
-config/icon="res://art/icon.svg"
 
 [autoload]
 

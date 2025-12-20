@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbsq67ujfkem1"
-path="res://.godot/imported/icon.svg-2ffe2e9772a318535303737ea3c29287.ctex"
+uid="uid://bskq24nixdlr0"
+path="res://.godot/imported/character-front-noeye.png-e7668f5fee1b10250368dd4273936791.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/icon.svg"
-dest_files=["res://.godot/imported/icon.svg-2ffe2e9772a318535303737ea3c29287.ctex"]
+source_file="res://art/character-front-noeye.png"
+dest_files=["res://.godot/imported/character-front-noeye.png-e7668f5fee1b10250368dd4273936791.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://htwdj6voryqa"
-path="res://.godot/imported/finish_point.PNG-747593426ff5e02e9875d3a91836c845.ctex"
+uid="uid://c0i4oot32p30i"
+path="res://.godot/imported/character-front-noeye.png-7e27b13eaf4bfe356f9d06a68123a08d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/finish_point.PNG"
-dest_files=["res://.godot/imported/finish_point.PNG-747593426ff5e02e9875d3a91836c845.ctex"]
+source_file="res://art/kitchen/character-front-noeye.png"
+dest_files=["res://.godot/imported/character-front-noeye.png-7e27b13eaf4bfe356f9d06a68123a08d.ctex"]
 
 [params]
 

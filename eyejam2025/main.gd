@@ -1,5 +1,14 @@
 extends Node2D
 
+# project notes
+# project uses "nearest" default canvas texture filter, all in game text labels override it to "linear"
+# all tangible sprites are oriented with y sort enabled
+# z index 0 - base
+# z index 1 - interactible text boxes
+# z index 2 - dialogue box
+# z index 3 - full screen effects
+# assumes character can't stand on more than one interactible at once
+
 # game state
 enum {STATE_START, STATE_MONSTER_PLANT, STATE_MONSTER_EYE, STATE_MONSTER_TEETH, STATE_MONSTER_FINAL}
 var gameState = STATE_START
@@ -26,6 +35,12 @@ var knockInProgress = false
 var teethMonsterFed := false
 var teethMonsterMet := false
 
+# sound effects
+var openAncientBoxSound := preload("res://sound/ancient_box.ogg")
+var eyeCutOutSound := preload("res://sound/cut_eye_out.ogg")
+var cutArmSound := preload("res://sound/cut_arm.ogg")
+var catMeowSound := preload("res://sound/cat_meow.ogg")
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Signals.InteractibleTriggered.connect(handleInteractible)
@@ -48,6 +63,8 @@ func _ready() -> void:
 	$Kitchen/TeethMonster.hide()
 	$Kitchen/CombinedMonster.hide()
 	
+	$Ambience.play()
+	
 	await get_tree().create_timer(5).timeout
 	if self.startKnockingEvent:
 		self.knockingEventActive = true
@@ -60,6 +77,8 @@ func teleToRoom(playerMoveSpot: Marker2D, cameraFocusPoint: Sprite2D):
 	$Player.position = playerMoveSpot.position
 	$Camera2D.position = cameraFocusPoint.position + cameraFocusPoint.get_rect().size / 2
 	$DialogueCreator.position = cameraFocusPoint.position + cameraFocusPoint.get_rect().size * Vector2(0.5, 0.75)
+	$Foreground.position = cameraFocusPoint.position
+	$Foreground.size = cameraFocusPoint.get_rect().size
 	
 func advanceGameState():
 	match self.gameState:
@@ -88,18 +107,19 @@ func handleInteractible(intName: String):
 				Signals.AllowPlayerInteract.emit()
 				
 				self.bedAvailable = false
-				$DialogueCreator.startOrAdvDialogue("", "You lose control of your body and need to take another pill.")
+				$DialogueCreator.startOrAdvDialogue("", "You feel like you are losing control of your body. Taking another pill is an undesirable but unavoidable outcome.")
 				self.pillAvailable = true
 			else:
 				$DialogueCreator.startOrAdvDialogue("", "You don't feel like sleeping at this time.")
 		"Cat":
 			if self.gameState == STATE_MONSTER_TEETH and self.teethMonsterMet:
 				$DialogueCreator.startOrAdvDialogue("", "You pick up the cat.")
+				self.playSoundEffect(self.catMeowSound)
 				self.catCollected = true
 				await Signals.DialogueFinished
 				$Bedroom/Cat.queue_free()
 			else:
-				$DialogueCreator.startOrAdvDialogue("", "The cat wakes up. She looks at you, stretches and then falls back asleep.")
+				$DialogueCreator.startOrAdvDialogue("", "The cat wakes up. She looks at you, stretches, and then falls back asleep.")
 		"Eye Monster":
 			if self.eyeMonsterFed:
 				$DialogueCreator.startOrAdvDialogue("", "watching...")
@@ -121,6 +141,7 @@ func handleInteractible(intName: String):
 				elif self.gameState == STATE_MONSTER_TEETH:
 					$DialogueCreator.startOrAdvDialogue("", "You take the star shaped pill and swallow it. You are able to take back control of your body.")
 					$Kitchen/TeethMonster.show()
+				self.playSoundEffect(self.openAncientBoxSound)
 				self.pillAvailable = false
 			else:
 				if self.gameState == STATE_MONSTER_PLANT:
@@ -128,13 +149,14 @@ func handleInteractible(intName: String):
 				elif self.gameState == STATE_MONSTER_EYE:
 					$DialogueCreator.startOrAdvDialogue("", "There's a star shaped pill in the box. It gives you a feeling you can't understand.")
 				else:
-					$DialogueCreator.startOrAdvDialogue("", "There's nothing in the box. It gives you a feeling you probably will never understand.")
+					$DialogueCreator.startOrAdvDialogue("", "There's nothing in the box. It gives you a feeling you'll probably never understand.")
 		"Front Door":
 			if self.gameState == STATE_START:
 				self.startKnockingEvent = false
 				self.knockingEventActive = false
-				$DialogueCreator.startOrAdvDialogue("", "You answer the front door. No one is there, instead a package lies on the floor with a note on it: \"We cannot see, but we know. You can see, and you will know. Nurture it.\" Confused, you take the package inside and open it. A strange box is inside. A strange otherwordly feeling overwhelms your body. Not in control of yourself, you open up the box, which contains 3 pills, one squiggly shaped, one circular shaped, and the last star shaped. You then swallow the squiggly shaped pill.")
+				$DialogueCreator.startOrAdvDialogue("", "You answer the front door. No one is there, instead a package lies on the floor with a note on it: \"We cannot see, but we know. You can see, and you will know. Nurture it.\" Confused, you take the package inside and open it. A strange box is inside. A strange otherwordly feeling overwhelms your body. Not in control of yourself, you open up the box, which contains 3 pills, one squiggly shaped, one circular shaped, and the last star shaped. You then swallow the squiggly shaped pill, and your sense of control returns, mostly.")
 				await Signals.DialogueFinished
+				self.playSoundEffect(self.openAncientBoxSound)
 				$MainRoom/Box.show()
 				self.advanceGameState()
 				$MainRoom/PlantMonster.show()
@@ -161,13 +183,17 @@ func handleInteractible(intName: String):
 				if self.armBleeding:
 					$DialogueCreator.startOrAdvDialogue("", "Using the knife wouldn't help any more at the moment.")
 				else:
-					$DialogueCreator.startOrAdvDialogue("", "You cut your arm with the knife and it is now bleeding. You feel there's no reason to attack the monster.")
+					$DialogueCreator.startOrAdvDialogue("", "You feel there's no reason to attack the monster. Instead, you cut your arm with the knife and it is now bleeding.")
+					self.playSoundEffect(self.cutArmSound)
 					self.armBleeding = true
 			elif self.gameState == STATE_MONSTER_EYE and self.eyeMonsterMet:
 				if self.eyeCollected:
 					$DialogueCreator.startOrAdvDialogue("", "Using the knife wouldn't help any more at the moment.")	
 				else:
 					$DialogueCreator.startOrAdvDialogue("", "You cut your right eye out. There's no pain.")
+					$Player.eyeMissing = true
+					self.createOverlayColorFade(Color(1, 0, 0, 0.15), 0.75, 0.75)
+					self.playSoundEffect(self.eyeCutOutSound)
 					self.eyeCollected = true
 			elif self.gameState == STATE_MONSTER_TEETH and self.teethMonsterMet:
 				$DialogueCreator.startOrAdvDialogue("", "One limb would be too little. More limbs too demanding.")
@@ -188,7 +214,7 @@ func handleInteractible(intName: String):
 				await Signals.DialogueFinished
 				
 				Signals.RemovePlayerMovement.emit()
-				Signals.AllowPlayerInteract.emit()
+				Signals.RemovePlayerInteract.emit()
 				var tween = get_tree().create_tween()
 				tween.tween_property($Kitchen/TeethMonster, "modulate:a", 0, 1)
 				$Kitchen/TeethMonster.queue_free()
@@ -196,14 +222,21 @@ func handleInteractible(intName: String):
 				$Kitchen/CombinedMonster.modulate.a = 0
 				tween.tween_property($Kitchen/CombinedMonster, "modulate:a", 1, 1)
 				await tween.finished
-				$DialogueCreator.startOrAdvDialogue("", "A larger horror appears, a combination of the earlier three. Yet I had no choice.")
+				Signals.AllowPlayerInteract.emit()
+				
+				Signals.PlayerInteractPressed.connect(self.handleInteractible.bind(""))
+				$DialogueCreator.startOrAdvDialogue("", "A larger horror appears, a combination of the earlier three. It speaks some incomprehensible language, yet you somehow understand its meaning. You gave it life, and now it lives. Though, you now know it was through manipulation you were being led down a path of no return.")
 				await Signals.DialogueFinished
-				$DialogueCreator.startOrAdvDialogue("", "You perish from exhaustion.")
+				$DialogueCreator.startOrAdvDialogue("", "Days have passed without you knowing or remembering. You don't know how long it's been. A heaviness is present which you could not feel, and it begins to set on you. You continue to stare at the creature for a short while before becoming too weak, and collasping. Everything then goes black.")
 				await Signals.DialogueFinished
+				$DialogueCreator.startOrAdvDialogue("", "With no strength left, you perish from exhaustion.")
+				await Signals.DialogueFinished
+				
+				Signals.RemovePlayerMovement.emit()
+				Signals.RemovePlayerInteract.emit()
 				self.createOverlayColorFade(Color(0, 0, 0, 1), 3, 1)
 				await get_tree().create_timer(3).timeout
-				self.teleToRoom($PlayerStart, $FinishPoint)
-				
+				$Camera2D.position = $FinishPoint.position
 		"Balcony":
 			if self.gameState == STATE_START:
 				$DialogueCreator.startOrAdvDialogue("", "I have no interest in going onto the balcony right now.")
@@ -248,7 +281,12 @@ func createOverlayColorFade(col: Color, fadeInTime, fadeOutTime):
 	$Foreground.modulate = col
 	$Foreground.modulate.a = 0
 	var tween = get_tree().create_tween()
-	tween.tween_property($Foreground, "modulate:a", 1, fadeInTime)
+	tween.tween_property($Foreground, "modulate:a", col.a, fadeInTime)
 	tween.tween_property($Foreground, "modulate:a", 0, fadeOutTime)
 	await tween.finished
 	$Foreground.hide()
+
+func playSoundEffect(snd: AudioStream):
+	$SoundEffects.stop()
+	$SoundEffects.stream = snd
+	$SoundEffects.play()

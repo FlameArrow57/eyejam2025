@@ -7,6 +7,13 @@ var footstepsAvailable := true
 
 @onready var anim := $AnimatedSprite2D
 
+var eyeMissing := false:
+	set(value):
+		if self.anim.animation == &"down" or self.anim.animation == &"idle" or \
+				(self.anim.animation == &"side" and self.anim.flip_h):
+			self.anim.animation += "-eyeless"
+		eyeMissing = value
+
 func _ready() -> void:
 	Signals.RemovePlayerMovement.connect(removeMovement)
 	Signals.AllowPlayerMovement.connect(allowMovement)
@@ -39,20 +46,19 @@ func update_animation() -> void:
 		return
 
 	if abs(velocity.x) > abs(velocity.y):
-		anim.play("side")
-
 		if velocity.x < 0:
+			anim.play("side")
 			anim.flip_h = false
 		else:
+			anim.play("side" if not self.eyeMissing else "side-eyeless")
 			anim.flip_h = true
-
 	else:
 		anim.flip_h = false 
 
 		if velocity.y < 0:
 			anim.play("up")
 		else:
-			anim.play("down")
+			anim.play("down" if not self.eyeMissing else "down-eyeless")
 		
 func allowMovement():
 	self.canMove = true
