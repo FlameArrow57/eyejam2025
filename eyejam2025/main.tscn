@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://drosw1in4ga21"]
+[gd_scene load_steps=33 format=3 uid="uid://drosw1in4ga21"]
 
 [ext_resource type="Script" uid="uid://cl3ydgrs1tw8k" path="res://main.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bovlvgu2x4hvh" path="res://player.tscn" id="2_0xm2m"]
@@ -8,27 +8,34 @@
 [ext_resource type="Texture2D" uid="uid://ciqgihxgabgjn" path="res://art/main room/main_room_wall.png" id="5_efxa6"]
 [ext_resource type="PackedScene" uid="uid://bpwl55aiu5uq3" path="res://dialogue_handler.tscn" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://br4rlkf2677o7" path="res://art/main room/couch.png" id="6_7mycd"]
+[ext_resource type="Texture2D" uid="uid://c3266op0n371a" path="res://art/other-assets/monsters/animations/dead plant monster/plantmonster1.png" id="6_074og"]
 [ext_resource type="Texture2D" uid="uid://7mlkbypv16lr" path="res://art/bedroom/bedroom.png" id="6_kek77"]
 [ext_resource type="Texture2D" uid="uid://bbtt4pryi2inf" path="res://art/monster.png" id="6_w48qg"]
 [ext_resource type="Texture2D" uid="uid://dnvyabshbpu14" path="res://art/bedroom/cat.png" id="7_4c57u"]
 [ext_resource type="Texture2D" uid="uid://c0gvw6swkdym" path="res://art/kitchen/kitchen.png" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://baj0oixsthbdl" path="res://tele_area.tscn" id="8_4c57u"]
 [ext_resource type="Texture2D" uid="uid://c2hvw1g5bh4bm" path="res://art/kitchen/kitchen_piece.png" id="8_dg77c"]
-[ext_resource type="Texture2D" uid="uid://f2vgg2jeppnp" path="res://art/main room/box.png" id="8_vivmo"]
+[ext_resource type="Texture2D" uid="uid://hathv05le4rn" path="res://art/other-assets/box.png" id="8_yaehf"]
 [ext_resource type="AudioStream" uid="uid://cqwcvk8xjturr" path="res://sound/door_knock.ogg" id="10_2cqfq"]
 [ext_resource type="AudioStream" uid="uid://bl2kavs31u0go" path="res://sound/apartment_ambience.ogg" id="18_074og"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
 size = Vector2(501.5, 132)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_82xsv"]
+size = Vector2(69.06474, 78.89109)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_2cqfq"]
 radius = 124.32619
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_074og"]
+radius = 139.91783
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cegan"]
 radius = 100.17984
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_074og"]
-radius = 139.91783
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_getpj"]
+size = Vector2(159, 104)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vivmo"]
 radius = 117.01709
@@ -68,6 +75,7 @@ color = Color(0, 0, 0, 1)
 
 [node name="MainRoom" type="Sprite2D" parent="."]
 y_sort_enabled = true
+position = Vector2(-26, -12)
 texture = ExtResource("4_7mycd")
 centered = false
 
@@ -104,41 +112,30 @@ centered = false
 offset = Vector2(0, -576)
 
 [node name="PlantMonster" type="Sprite2D" parent="MainRoom"]
-position = Vector2(461, 449)
-texture = ExtResource("6_w48qg")
+position = Vector2(297.00006, 377)
+scale = Vector2(1.0859375, 1.0520834)
+texture = ExtResource("6_074og")
 centered = false
 offset = Vector2(0, -150)
 
 [node name="Interactible" parent="MainRoom/PlantMonster" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
-position = Vector2(51, -24)
+position = Vector2(169.43878, 12.356434)
 interactArea = NodePath("Area2D")
 interactibleName = "Plant Monster"
 
+[node name="StaticBody2D" type="StaticBody2D" parent="MainRoom/PlantMonster/Interactible"]
+scale = Vector2(0.9999998, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainRoom/PlantMonster/Interactible/StaticBody2D"]
+position = Vector2(0.46051025, 70.81189)
+shape = SubResource("RectangleShape2D_82xsv")
+
 [node name="Area2D" type="Area2D" parent="MainRoom/PlantMonster/Interactible"]
+position = Vector2(5.525181, 17.108912)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainRoom/PlantMonster/Interactible/Area2D"]
 shape = SubResource("CircleShape2D_2cqfq")
 debug_color = Color(0.65801173, 0.5161255, 1.92523e-07, 0.41960785)
-metadata/_edit_lock_ = true
-
-[node name="Box" type="Sprite2D" parent="MainRoom"]
-position = Vector2(875, 850)
-texture = ExtResource("8_vivmo")
-centered = false
-offset = Vector2(0, -60)
-
-[node name="Interactible" parent="MainRoom/Box" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
-position = Vector2(33, 33)
-interactArea = NodePath("Area2D")
-interactibleName = "Ancient Box"
-
-[node name="Area2D" type="Area2D" parent="MainRoom/Box/Interactible"]
-position = Vector2(5, -50)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainRoom/Box/Interactible/Area2D"]
-position = Vector2(2, 0)
-shape = SubResource("CircleShape2D_cegan")
-debug_color = Color(0.65107334, 0.51971495, 0, 0.41960785)
 metadata/_edit_lock_ = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="MainRoom"]
@@ -156,7 +153,7 @@ teleToMarker = NodePath("../../TeleMainroomToKitchen")
 cameraFocusPoint = NodePath("../../Kitchen")
 
 [node name="TeleArea2" parent="MainRoom" node_paths=PackedStringArray("teleToMarker", "cameraFocusPoint") instance=ExtResource("8_4c57u")]
-position = Vector2(106, 411)
+position = Vector2(980, 371)
 scale = Vector2(1, 2.185)
 teleToMarker = NodePath("../../TeleToBedroom")
 cameraFocusPoint = NodePath("../../Bedroom")
@@ -207,6 +204,32 @@ text = "Knock"
 [node name="KnockSound" type="AudioStreamPlayer" parent="MainRoom/KnockEffect"]
 stream = ExtResource("10_2cqfq")
 pitch_scale = 0.5
+
+[node name="Box" type="Sprite2D" parent="MainRoom"]
+position = Vector2(802, 790)
+texture = ExtResource("8_yaehf")
+centered = false
+offset = Vector2(0, -60)
+
+[node name="Interactible" parent="MainRoom/Box" node_paths=PackedStringArray("interactArea") instance=ExtResource("3_h2yge")]
+position = Vector2(96, 39)
+interactArea = NodePath("Area2D")
+interactibleName = "Ancient Box"
+
+[node name="Area2D" type="Area2D" parent="MainRoom/Box/Interactible"]
+position = Vector2(27, 13)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainRoom/Box/Interactible/Area2D"]
+position = Vector2(2, 0)
+shape = SubResource("CircleShape2D_cegan")
+debug_color = Color(0.65107334, 0.51971495, 0, 0.41960785)
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="MainRoom/Box/Interactible"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainRoom/Box/Interactible/StaticBody2D"]
+position = Vector2(30.5, 27)
+shape = SubResource("RectangleShape2D_getpj")
 
 [node name="Kitchen" type="Sprite2D" parent="."]
 y_sort_enabled = true

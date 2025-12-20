@@ -42,7 +42,8 @@ func _physics_process(_delta: float) -> void:
 
 func update_animation() -> void:
 	if velocity == Vector2.ZERO:
-		anim.stop()
+		anim.play("idle")
+		anim.flip_h = false
 		return
 
 	if abs(velocity.x) > abs(velocity.y):
