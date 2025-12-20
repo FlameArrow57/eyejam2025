@@ -106,7 +106,7 @@ func handleInteractible(intName: String):
 				Signals.AllowPlayerInteract.emit()
 				
 				self.bedAvailable = false
-				$DialogueCreator.startOrAdvDialogue("", "You lose control of your body and need to take another pill.")
+				$DialogueCreator.startOrAdvDialogue("", "You feel like you are losing control of your body. Taking another pill is an undesirable but unavoidable outcome.")
 				self.pillAvailable = true
 			else:
 				$DialogueCreator.startOrAdvDialogue("", "You don't feel like sleeping at this time.")
@@ -118,7 +118,7 @@ func handleInteractible(intName: String):
 				await Signals.DialogueFinished
 				$Bedroom/Cat.queue_free()
 			else:
-				$DialogueCreator.startOrAdvDialogue("", "The cat wakes up. She looks at you, stretches and then falls back asleep.")
+				$DialogueCreator.startOrAdvDialogue("", "The cat wakes up. She looks at you, stretches, and then falls back asleep.")
 		"Eye Monster":
 			if self.eyeMonsterFed:
 				$DialogueCreator.startOrAdvDialogue("", "watching...")
@@ -148,12 +148,12 @@ func handleInteractible(intName: String):
 				elif self.gameState == STATE_MONSTER_EYE:
 					$DialogueCreator.startOrAdvDialogue("", "There's a star shaped pill in the box. It gives you a feeling you can't understand.")
 				else:
-					$DialogueCreator.startOrAdvDialogue("", "There's nothing in the box. It gives you a feeling you probably will never understand.")
+					$DialogueCreator.startOrAdvDialogue("", "There's nothing in the box. It gives you a feeling you'll probably never understand.")
 		"Front Door":
 			if self.gameState == STATE_START:
 				self.startKnockingEvent = false
 				self.knockingEventActive = false
-				$DialogueCreator.startOrAdvDialogue("", "You answer the front door. No one is there, instead a package lies on the floor with a note on it: \"We cannot see, but we know. You can see, and you will know. Nurture it.\" Confused, you take the package inside and open it. A strange box is inside. A strange otherwordly feeling overwhelms your body. Not in control of yourself, you open up the box, which contains 3 pills, one squiggly shaped, one circular shaped, and the last star shaped. You then swallow the squiggly shaped pill.")
+				$DialogueCreator.startOrAdvDialogue("", "You answer the front door. No one is there, instead a package lies on the floor with a note on it: \"We cannot see, but we know. You can see, and you will know. Nurture it.\" Confused, you take the package inside and open it. A strange box is inside. A strange otherwordly feeling overwhelms your body. Not in control of yourself, you open up the box, which contains 3 pills, one squiggly shaped, one circular shaped, and the last star shaped. You then swallow the squiggly shaped pill, and your sense of control returns, mostly.")
 				await Signals.DialogueFinished
 				self.playSoundEffect(self.openAncientBoxSound)
 				$MainRoom/Box.show()
@@ -182,7 +182,7 @@ func handleInteractible(intName: String):
 				if self.armBleeding:
 					$DialogueCreator.startOrAdvDialogue("", "Using the knife wouldn't help any more at the moment.")
 				else:
-					$DialogueCreator.startOrAdvDialogue("", "You cut your arm with the knife and it is now bleeding. You feel there's no reason to attack the monster.")
+					$DialogueCreator.startOrAdvDialogue("", "You feel there's no reason to attack the monster. Instead, you cut your arm with the knife and it is now bleeding.")
 					self.playSoundEffect(self.cutArmSound)
 					self.armBleeding = true
 			elif self.gameState == STATE_MONSTER_EYE and self.eyeMonsterMet:
