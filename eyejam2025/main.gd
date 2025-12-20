@@ -7,6 +7,7 @@ extends Node2D
 # z index 1 - interactible text boxes
 # z index 2 - dialogue box
 # z index 3 - full screen effects
+# assumes character can't stand on more than one interactible at once
 
 # game state
 enum {STATE_START, STATE_MONSTER_PLANT, STATE_MONSTER_EYE, STATE_MONSTER_TEETH, STATE_MONSTER_FINAL}
@@ -213,7 +214,7 @@ func handleInteractible(intName: String):
 				await Signals.DialogueFinished
 				
 				Signals.RemovePlayerMovement.emit()
-				Signals.AllowPlayerInteract.emit()
+				Signals.RemovePlayerInteract.emit()
 				var tween = get_tree().create_tween()
 				tween.tween_property($Kitchen/TeethMonster, "modulate:a", 0, 1)
 				$Kitchen/TeethMonster.queue_free()
@@ -221,12 +222,18 @@ func handleInteractible(intName: String):
 				$Kitchen/CombinedMonster.modulate.a = 0
 				tween.tween_property($Kitchen/CombinedMonster, "modulate:a", 1, 1)
 				await tween.finished
+				Signals.AllowPlayerInteract.emit()
 				
-				$DialogueCreator.startOrAdvDialogue("", "A larger horror appears, a combination of the earlier three. Yet I had no choice.")
+				Signals.PlayerInteractPressed.connect(self.handleInteractible.bind(""))
+				$DialogueCreator.startOrAdvDialogue("", "A larger horror appears, a combination of the earlier three. It speaks some incomprehensible language, yet you somehow understand its meaning. You gave it life, and now it lives. Though, you now know it was through manipulation you were being led down a path of no return.")
 				await Signals.DialogueFinished
-				$DialogueCreator.startOrAdvDialogue("", "You perish from exhaustion.")
+				$DialogueCreator.startOrAdvDialogue("", "Days have passed without you knowing or remembering. You don't know how long it's been. A heaviness is present which you could not feel, and it begins to set on you. You continue to stare at the creature for a short while before becoming too weak, and collasping. Everything then goes black.")
+				await Signals.DialogueFinished
+				$DialogueCreator.startOrAdvDialogue("", "With no strength left, you perish from exhaustion.")
 				await Signals.DialogueFinished
 				
+				Signals.RemovePlayerMovement.emit()
+				Signals.RemovePlayerInteract.emit()
 				self.createOverlayColorFade(Color(0, 0, 0, 1), 3, 1)
 				await get_tree().create_timer(3).timeout
 				$Camera2D.position = $FinishPoint.position
