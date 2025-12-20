@@ -128,6 +128,7 @@ func handleInteractible(intName: String):
 				self.eyeMonsterMet = true
 			else:
 				$DialogueCreator.startOrAdvDialogue("", "You give the creature a new eye.")
+				$Bedroom/EyeMonster.play("alive")
 				self.eyeMonsterFed = true
 				await Signals.DialogueFinished
 				$DialogueCreator.startOrAdvDialogue("", "I feel tired and should rest. That was exhausting.")
@@ -173,6 +174,7 @@ func handleInteractible(intName: String):
 				self.plantMonsterMet = true
 			else:
 				$DialogueCreator.startOrAdvDialogue("", "You squeeze blood from your arm onto the creature.")
+				$MainRoom/PlantMonster.texture = load("res://art/plant_monster_alive.png")
 				self.plantMonsterFed = true
 				await Signals.DialogueFinished
 				$DialogueCreator.startOrAdvDialogue("", "I feel tired and should rest. I can't tell if what I've seen is real or not. Hopefully it will go away when I wake up.")
@@ -210,6 +212,7 @@ func handleInteractible(intName: String):
 				self.teethMonsterMet = true
 			else:
 				$DialogueCreator.startOrAdvDialogue("", "You feed your cat to the creature. You feel nothing.")
+				$Kitchen/TeethMonster.play("alive")
 				self.teethMonsterFed = true
 				await Signals.DialogueFinished
 				
@@ -220,6 +223,7 @@ func handleInteractible(intName: String):
 				$Kitchen/TeethMonster.queue_free()
 				$Kitchen/CombinedMonster.show()
 				$Kitchen/CombinedMonster.modulate.a = 0
+				$Kitchen/CombinedMonster.play()
 				tween.tween_property($Kitchen/CombinedMonster, "modulate:a", 1, 1)
 				await tween.finished
 				Signals.AllowPlayerInteract.emit()

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjuob8wskrqan"
-path="res://.godot/imported/box.png-cef2d8e2cbae85c8992efd9da70856cb.ctex"
+uid="uid://ppht3p3afrjl"
+path="res://.godot/imported/combined monster.png-a0d7f33a1984d0189906f1f9e594d8c9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/main room/box.png"
-dest_files=["res://.godot/imported/box.png-cef2d8e2cbae85c8992efd9da70856cb.ctex"]
+source_file="res://art/combined monster.png"
+dest_files=["res://.godot/imported/combined monster.png-a0d7f33a1984d0189906f1f9e594d8c9.ctex"]
 
 [params]
 

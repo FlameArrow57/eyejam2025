@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjuob8wskrqan"
-path="res://.godot/imported/box.png-cef2d8e2cbae85c8992efd9da70856cb.ctex"
+uid="uid://dy0wv3ivrkkd1"
+path="res://.godot/imported/teeth_monster_alive.png-abc1270ce507c51934bc4262a31054e8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/main room/box.png"
-dest_files=["res://.godot/imported/box.png-cef2d8e2cbae85c8992efd9da70856cb.ctex"]
+source_file="res://art/teeth_monster_alive.png"
+dest_files=["res://.godot/imported/teeth_monster_alive.png-abc1270ce507c51934bc4262a31054e8.ctex"]
 
 [params]
 

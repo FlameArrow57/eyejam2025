@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjuob8wskrqan"
-path="res://.godot/imported/box.png-cef2d8e2cbae85c8992efd9da70856cb.ctex"
+uid="uid://br07ccm7d8wul"
+path="res://.godot/imported/plant_monster_alive.png-f8966bfb3645b5329178d11819da1e87.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/main room/box.png"
-dest_files=["res://.godot/imported/box.png-cef2d8e2cbae85c8992efd9da70856cb.ctex"]
+source_file="res://art/plant_monster_alive.png"
+dest_files=["res://.godot/imported/plant_monster_alive.png-f8966bfb3645b5329178d11819da1e87.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjuob8wskrqan"
-path="res://.godot/imported/box.png-cef2d8e2cbae85c8992efd9da70856cb.ctex"
+uid="uid://70kiuuw0mwv"
+path="res://.godot/imported/eye_dead.png-cf33f5d334de42e766d391180fe899d4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/main room/box.png"
-dest_files=["res://.godot/imported/box.png-cef2d8e2cbae85c8992efd9da70856cb.ctex"]
+source_file="res://art/eye_dead.png"
+dest_files=["res://.godot/imported/eye_dead.png-cf33f5d334de42e766d391180fe899d4.ctex"]
 
 [params]
 
